@@ -14,7 +14,7 @@
   --color-disponible: #4c7a5a;
   --color-agotado: #a44b3f;
 
-  --font-serif: 'Georgia', 'Times New Roman', serif;
+  --font-serif: 'Playfair Display', 'Georgia', 'Times New Roman', serif;
   --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 
   --radius: 10px;
@@ -63,19 +63,22 @@ body {
 .logo-text {
   display: none;
   font-family: var(--font-serif);
-  font-size: 2.75rem;
-  letter-spacing: 0.12em;
-  font-weight: 400;
+  font-size: 4rem;
+  letter-spacing: 0.01em;
+  font-weight: 900;
   color: var(--color-text);
+  line-height: 1;
 }
 
 .tagline {
-  margin: 0.5rem 0 0;
+  margin: 0.6rem 0 0;
   font-family: var(--font-serif);
-  font-style: italic;
+  font-style: normal;
+  font-weight: 600;
+  text-transform: uppercase;
   color: var(--color-text-muted);
-  font-size: 0.95rem;
-  letter-spacing: 0.03em;
+  font-size: 1.05rem;
+  letter-spacing: 0.3em;
 }
 
 /* ---------- Catálogo ---------- */
@@ -88,9 +91,10 @@ body {
 
 .section-title {
   font-family: var(--font-serif);
-  font-weight: 400;
+  font-weight: 700;
   font-size: 1.6rem;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   text-align: center;
   margin: 0 0 2.5rem;
   color: var(--color-text);
@@ -129,6 +133,7 @@ body {
   height: 100%;
   object-fit: cover;
   display: block;
+  cursor: zoom-in;
 }
 
 .card-body {
@@ -304,11 +309,49 @@ body {
   margin: 0;
 }
 
+/* ---------- Lightbox de imagen ---------- */
+
+.lightbox-box {
+  position: relative;
+  max-width: 600px;
+  width: 100%;
+  background-color: var(--color-bg-card);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+  text-align: center;
+}
+
+.lightbox-box img {
+  width: 100%;
+  max-height: 70vh;
+  object-fit: contain;
+  border-radius: 6px;
+  background-color: #f0eee9;
+}
+
+.lightbox-nombre {
+  font-family: var(--font-serif);
+  font-size: 1.2rem;
+  margin: 1rem 0 0;
+  color: var(--color-text);
+}
+
+.lightbox-cerrar {
+  top: 0.5rem;
+  right: 0.5rem;
+}
+
 /* ---------- Responsive ---------- */
 
 @media (max-width: 480px) {
   .logo-text {
-    font-size: 2.1rem;
+    font-size: 2.75rem;
+  }
+
+  .tagline {
+    letter-spacing: 0.2em;
+    font-size: 0.85rem;
   }
 
   .catalogo-grid {

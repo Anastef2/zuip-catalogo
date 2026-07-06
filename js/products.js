@@ -7,7 +7,7 @@
 //   nombre       (texto)              -> nombre del modelo
 //   precio       (número)             -> precio en tu moneda, sin símbolo
 //   imagen       (texto, ruta)        -> ruta al archivo dentro de /images
-//   disponible   (true / false)       -> true = en stock, false = agotado
+//   cantidad     (número)             -> unidades en stock. 0 = agotado
 //   descripcion  (texto, opcional)    -> descripción corta
 //
 // Para agregar una gafa nueva, copia un bloque { ... } completo,
@@ -19,28 +19,28 @@ const productos = [
     nombre: "Aviador Clásico",
     precio: 45000,
     imagen: "images/gafa-aviador.svg",
-    disponible: true,
+    cantidad: 5,
     descripcion: "Montura metálica estilo aviador, lentes degradé."
   },
   {
     nombre: "Redondo Retro",
     precio: 38000,
     imagen: "images/gafa-redonda.svg",
-    disponible: true,
+    cantidad: 2,
     descripcion: "Diseño circular vintage, ideal para uso diario."
   },
   {
     nombre: "Cuadrado Urbano",
     precio: 42000,
     imagen: "images/gafa-cuadrada.svg",
-    disponible: false,
+    cantidad: 0,
     descripcion: "Montura de acetato, líneas rectas y modernas."
   },
   {
     nombre: "Ojo de Gato",
     precio: 50000,
     imagen: "images/gafa-gato.svg",
-    disponible: true,
+    cantidad: 3,
     descripcion: "Estilo femenino y elegante, terminación en punta."
   }
 ];
