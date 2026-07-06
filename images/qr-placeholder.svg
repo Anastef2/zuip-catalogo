@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="220" height="220" viewBox="0 0 220 220">
+  <rect width="220" height="220" fill="#f2f0ec" stroke="#c9c5bd" stroke-width="2"/>
+  <text x="110" y="105" font-family="Georgia, serif" font-size="16" fill="#9a958c" text-anchor="middle">Código QR</text>
+  <text x="110" y="128" font-family="Georgia, serif" font-size="13" fill="#b3aea4" text-anchor="middle">(reemplazar por qr.png)</text>
+</svg>

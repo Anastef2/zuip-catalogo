@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="450" viewBox="0 0 600 450">
+  <rect width="600" height="450" fill="#eae7e2"/>
+  <g stroke="#4a4a48" stroke-width="7" fill="none">
+    <path d="M130,240 Q140,160 230,180 Q290,195 290,240 Q290,280 230,280 Q150,280 130,240 Z"/>
+    <path d="M470,240 Q460,160 370,180 Q310,195 310,240 Q310,280 370,280 Q450,280 470,240 Z"/>
+    <line x1="290" y1="215" x2="310" y2="215"/>
+    <line x1="130" y1="215" x2="65" y2="185"/>
+    <line x1="470" y1="215" x2="535" y2="185"/>
+  </g>
+  <text x="300" y="400" font-family="Georgia, serif" font-size="22" fill="#7a7570" text-anchor="middle">Modelo Ojo de Gato</text>
+</svg>

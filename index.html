@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZUIP — Gafas</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="./" class="logo-link" aria-label="ZUIP">
+        <img
+          id="logo-img"
+          class="logo-img"
+          src="images/logo.png"
+          alt="ZUIP"
+          onerror="this.style.display='none'; document.getElementById('logo-text').style.display='inline-block';"
+        >
+        <span id="logo-text" class="logo-text">ZUIP</span>
+      </a>
+      <p class="tagline">Gafas con estilo</p>
+    </div>
+  </header>
+
+  <main>
+    <section class="catalogo-section">
+      <h1 class="section-title">Catálogo</h1>
+      <div id="catalogo" class="catalogo-grid">
+        <!-- Las tarjetas de productos se generan aquí con JavaScript -->
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; <span id="anio"></span> ZUIP. Todos los derechos reservados.</p>
+  </footer>
+
+  <!-- Modal de pago -->
+  <div id="modal-pago" class="modal-overlay" hidden>
+    <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modal-titulo">
+      <button id="cerrar-modal" class="modal-cerrar" aria-label="Cerrar">&times;</button>
+      <h2 id="modal-titulo">Cómo pagar</h2>
+      <p class="modal-producto" id="modal-producto-nombre"></p>
+
+      <div class="datos-pago">
+        <p><strong>Banco:</strong> <span id="pago-banco"></span></p>
+        <p><strong>Tipo de cuenta:</strong> <span id="pago-tipo"></span></p>
+        <p><strong>Número de cuenta:</strong> <span id="pago-numero"></span></p>
+        <p><strong>Titular:</strong> <span id="pago-titular"></span></p>
+        <p><strong>Identificación:</strong> <span id="pago-id"></span></p>
+      </div>
+
+      <div class="qr-wrapper">
+        <img id="pago-qr" src="" alt="Código QR para transferencia">
+      </div>
+
+      <p class="modal-nota">Una vez realizada la transferencia, envíanos el comprobante para confirmar tu compra.</p>
+    </div>
+  </div>
+
+  <script src="js/products.js"></script>
+  <script src="js/script.js"></script>
+</body>
+</html>
