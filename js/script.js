@@ -1,16 +1,46 @@
 // ============================================================
 // ZUIP — lógica del catálogo
 // Lee los datos de products.js (variables `colecciones`, `datosPago`
-// y `contacto`) y arma las secciones + el modal de pago y el
-// lightbox. No necesita edición para agregar/quitar gafas: eso se
-// hace en products.js.
+// y `contacto`). Este mismo archivo se usa en index.html (portada)
+// y en coleccion.html (detalle de una colección): cada página
+// renderiza solo la parte que le corresponde, según qué elementos
+// existan en el HTML.
 // ============================================================
 
 function formatearPrecio(numero) {
   return numero.toLocaleString('es-ES');
 }
 
-function crearTarjeta(producto, colIndice, prodIndice) {
+// ---------- Portada (index.html): tarjetas de colección ----------
+
+function crearTarjetaColeccion(coleccion) {
+  const card = document.createElement('a');
+  card.className = 'portada-card';
+  card.href = `coleccion.html?id=${encodeURIComponent(coleccion.slug)}`;
+
+  const portada = coleccion.productos[0];
+
+  card.innerHTML = `
+    <div class="portada-img-wrapper">
+      <img src="${portada.imagen}" alt="${coleccion.nombre}" loading="lazy">
+    </div>
+    <h2 class="portada-nombre">${coleccion.nombre}</h2>
+    <p class="portada-descripcion">${coleccion.descripcion}</p>
+  `;
+
+  return card;
+}
+
+function renderizarPortada() {
+  const contenedor = document.getElementById('portada');
+  colecciones.forEach((coleccion) => {
+    contenedor.appendChild(crearTarjetaColeccion(coleccion));
+  });
+}
+
+// ---------- Detalle de colección (coleccion.html) ----------
+
+function crearTarjetaProducto(producto, indice) {
   const card = document.createElement('article');
   card.className = 'card';
 
@@ -19,12 +49,12 @@ function crearTarjeta(producto, colIndice, prodIndice) {
   const badgeTexto = hayStock ? `Hay ${producto.cantidad} disponibles` : 'Agotado';
 
   const botonHtml = hayStock
-    ? `<button class="btn-comprar" data-col="${colIndice}" data-prod="${prodIndice}">Cómo pagar</button>`
+    ? `<button class="btn-comprar" data-indice="${indice}">Cómo pagar</button>`
     : `<button class="btn-agotado" disabled>Agotado</button>`;
 
   card.innerHTML = `
     <div class="card-img-wrapper">
-      <img src="${producto.imagen}" alt="${producto.nombre}" loading="lazy" data-col="${colIndice}" data-prod="${prodIndice}">
+      <img src="${producto.imagen}" alt="${producto.nombre}" loading="lazy" data-indice="${indice}">
     </div>
     <div class="card-body">
       <h2 class="card-nombre">${producto.nombre}</h2>
@@ -37,48 +67,50 @@ function crearTarjeta(producto, colIndice, prodIndice) {
   return card;
 }
 
-function crearSeccion(coleccion, colIndice) {
-  const seccion = document.createElement('section');
-  seccion.className = 'coleccion-section';
+function renderizarColeccion() {
+  const params = new URLSearchParams(window.location.search);
+  const slug = params.get('id');
+  const coleccion = colecciones.find((c) => c.slug === slug);
+  const contenedor = document.getElementById('coleccion-detalle');
 
-  const grid = document.createElement('div');
-  grid.className = 'catalogo-grid';
+  if (!coleccion) {
+    contenedor.innerHTML = `
+      <p class="coleccion-no-encontrada">
+        No encontramos esa colección. <a href="./">Volver al catálogo</a>.
+      </p>
+    `;
+    return;
+  }
 
-  coleccion.productos.forEach((producto, prodIndice) => {
-    grid.appendChild(crearTarjeta(producto, colIndice, prodIndice));
-  });
+  document.title = `ZUIP — ${coleccion.nombre}`;
 
-  seccion.innerHTML = `
-    <h2 class="coleccion-titulo">${coleccion.nombre}</h2>
+  contenedor.innerHTML = `
+    <h1 class="coleccion-titulo">${coleccion.nombre}</h1>
     <p class="coleccion-descripcion">${coleccion.descripcion}</p>
+    <div class="catalogo-grid" id="coleccion-grid"></div>
   `;
-  seccion.appendChild(grid);
 
-  return seccion;
-}
-
-function renderizarCatalogo() {
-  const contenedor = document.getElementById('catalogo');
-  contenedor.innerHTML = '';
-
-  colecciones.forEach((coleccion, colIndice) => {
-    contenedor.appendChild(crearSeccion(coleccion, colIndice));
+  const grid = document.getElementById('coleccion-grid');
+  coleccion.productos.forEach((producto, indice) => {
+    grid.appendChild(crearTarjetaProducto(producto, indice));
   });
 
-  contenedor.querySelectorAll('.btn-comprar').forEach((boton) => {
+  grid.querySelectorAll('.btn-comprar').forEach((boton) => {
     boton.addEventListener('click', () => {
-      const producto = colecciones[Number(boton.dataset.col)].productos[Number(boton.dataset.prod)];
+      const producto = coleccion.productos[Number(boton.dataset.indice)];
       abrirModalPago(producto);
     });
   });
 
-  contenedor.querySelectorAll('.card-img-wrapper img').forEach((img) => {
+  grid.querySelectorAll('.card-img-wrapper img').forEach((img) => {
     img.addEventListener('click', () => {
-      const producto = colecciones[Number(img.dataset.col)].productos[Number(img.dataset.prod)];
+      const producto = coleccion.productos[Number(img.dataset.indice)];
       abrirLightbox(producto);
     });
   });
 }
+
+// ---------- Lightbox de imagen (solo coleccion.html) ----------
 
 function abrirLightbox(producto) {
   document.getElementById('lightbox-img').src = producto.imagen;
@@ -90,6 +122,8 @@ function abrirLightbox(producto) {
 function cerrarLightbox() {
   document.getElementById('lightbox').hidden = true;
 }
+
+// ---------- Modal de pago (solo coleccion.html) ----------
 
 function abrirModalPago(producto) {
   document.getElementById('modal-producto-nombre').textContent = producto.nombre;
@@ -107,6 +141,8 @@ function cerrarModalPago() {
   document.getElementById('modal-pago').hidden = true;
 }
 
+// ---------- Contacto (portada y detalle) ----------
+
 function renderizarContacto() {
   document.getElementById('contacto-telefonos').innerHTML =
     contacto.telefonos.map((t) => `<span>${t}</span>`).join('');
@@ -114,30 +150,38 @@ function renderizarContacto() {
   document.getElementById('contacto-nota').textContent = contacto.nota;
 }
 
-document.getElementById('cerrar-modal').addEventListener('click', cerrarModalPago);
+// ---------- Arranque: cada página renderiza solo lo que tiene ----------
 
-document.getElementById('modal-pago').addEventListener('click', (evento) => {
-  if (evento.target.id === 'modal-pago') {
-    cerrarModalPago();
-  }
-});
+if (document.getElementById('portada')) {
+  renderizarPortada();
+}
 
-document.getElementById('cerrar-lightbox').addEventListener('click', cerrarLightbox);
+if (document.getElementById('coleccion-detalle')) {
+  renderizarColeccion();
 
-document.getElementById('lightbox').addEventListener('click', (evento) => {
-  if (evento.target.id === 'lightbox') {
-    cerrarLightbox();
-  }
-});
+  document.getElementById('cerrar-modal').addEventListener('click', cerrarModalPago);
 
-document.addEventListener('keydown', (evento) => {
-  if (evento.key === 'Escape') {
-    cerrarModalPago();
-    cerrarLightbox();
-  }
-});
+  document.getElementById('modal-pago').addEventListener('click', (evento) => {
+    if (evento.target.id === 'modal-pago') {
+      cerrarModalPago();
+    }
+  });
+
+  document.getElementById('cerrar-lightbox').addEventListener('click', cerrarLightbox);
+
+  document.getElementById('lightbox').addEventListener('click', (evento) => {
+    if (evento.target.id === 'lightbox') {
+      cerrarLightbox();
+    }
+  });
+
+  document.addEventListener('keydown', (evento) => {
+    if (evento.key === 'Escape') {
+      cerrarModalPago();
+      cerrarLightbox();
+    }
+  });
+}
 
 document.getElementById('anio').textContent = new Date().getFullYear();
-
-renderizarCatalogo();
 renderizarContacto();

@@ -1,9 +1,17 @@
 // ============================================================
 // CATÁLOGO DE GAFAS ZUIP
 // ============================================================
-// El catálogo está organizado por colecciones (secciones). Cada
-// colección tiene un nombre, una descripción compartida, y una
-// lista de productos.
+// El catálogo está organizado por colecciones. La portada
+// (index.html) muestra una tarjeta por colección; al hacer clic
+// se abre coleccion.html con los productos de esa colección.
+//
+// Cada colección tiene:
+//   nombre       (texto)   -> título de la colección
+//   slug         (texto)   -> identificador único para la URL
+//                             (coleccion.html?id=ESTE_SLUG). Debe
+//                             ser único, sin espacios ni acentos.
+//   descripcion  (texto)   -> subtítulo de la colección
+//   productos    (lista)   -> gafas de esa colección
 //
 // Cada producto tiene:
 //   nombre       (texto)              -> nombre del modelo
@@ -14,12 +22,14 @@
 // Para agregar una gafa nueva a una colección, copia un bloque
 // { ... } completo dentro de su lista "productos" y edita sus valores.
 // Para agregar una colección nueva, copia un bloque de colección
-// completo (desde "nombre:" hasta el "]," que cierra "productos").
+// completo (desde "nombre:" hasta el "]," que cierra "productos")
+// y asegúrate de darle un "slug" que no se repita.
 // ============================================================
 
 const colecciones = [
   {
     nombre: "Gafas Clásicas",
+    slug: "clasicas",
     descripcion: "Gafas de Sol Unisex Armazón Clásico Grueso. Protección UV400.",
     productos: [
       { nombre: "Clásicas 1", precio: 12, imagen: "images/productos/clasicas-1.png", cantidad: 5 },
@@ -32,6 +42,7 @@ const colecciones = [
   },
   {
     nombre: "Gafas Aura",
+    slug: "aura",
     descripcion: "Gafas de Sol Unisex Armazón Retro Delgado. Protección UV400.",
     productos: [
       { nombre: "Aura 1", precio: 13, imagen: "images/productos/aura-1.png", cantidad: 5 },
@@ -41,6 +52,7 @@ const colecciones = [
   },
   {
     nombre: "Gafas Origen",
+    slug: "origen",
     descripcion: "Gafas de Sol Unisex Armazón Retro Delgado. Protección UV400.",
     productos: [
       { nombre: "Origen 1", precio: 15, imagen: "images/productos/origen-1.png", cantidad: 5 },
@@ -49,6 +61,7 @@ const colecciones = [
   },
   {
     nombre: "Gafas Esencia",
+    slug: "esencia",
     descripcion: "Gafas de Sol Unisex Armazón Retro Delgado. Protección UV400.",
     productos: [
       { nombre: "Esencia 1", precio: 15, imagen: "images/productos/esencia-1.png", cantidad: 5 }
@@ -56,6 +69,7 @@ const colecciones = [
   },
   {
     nombre: "Gafas Urbanas",
+    slug: "urbanas",
     descripcion: "Gafas de Sol Unisex Armazón Retro Delgado. Protección UV400.",
     productos: [
       { nombre: "Urbanas 1", precio: 12, imagen: "images/productos/urbanas-1.png", cantidad: 5 },
@@ -65,6 +79,7 @@ const colecciones = [
   },
   {
     nombre: "Gafas Nexo",
+    slug: "nexo",
     descripcion: "Gafas de Sol Unisex Armazón Retro Delgado. Protección UV400.",
     productos: [
       { nombre: "Nexo 1", precio: 14, imagen: "images/productos/nexo-1.png", cantidad: 5 },
@@ -73,6 +88,7 @@ const colecciones = [
   },
   {
     nombre: "Gafas Zenit",
+    slug: "zenit",
     descripcion: "Gafas de Sol Unisex Armazón Retro Delgado. Protección UV400.",
     productos: [
       { nombre: "Zenit 1", precio: 13, imagen: "images/productos/zenit-1.png", cantidad: 5 },
@@ -83,6 +99,7 @@ const colecciones = [
   },
   {
     nombre: "Gafas Redondas",
+    slug: "redondas",
     descripcion: "Gafas de Sol Unisex Armazón Retro Delgado. Protección UV400.",
     productos: [
       { nombre: "Redondas 1", precio: 13, imagen: "images/productos/redondas-1.png", cantidad: 5 },
@@ -95,6 +112,7 @@ const colecciones = [
   },
   {
     nombre: "Gafas Hexagonales",
+    slug: "hexagonales",
     descripcion: "Gafas de Sol Unisex Armazón hexagonal. Protección UV400.",
     productos: [
       { nombre: "Hexagonales 1", precio: 10, imagen: "images/productos/hexagonales-1.png", cantidad: 5 },
@@ -105,6 +123,7 @@ const colecciones = [
   },
   {
     nombre: "Gafas Retro",
+    slug: "retro",
     descripcion: "Gafas de Sol Unisex, armazón estilo Stark, regulares. Protección UV400.",
     productos: [
       { nombre: "Retro 1", precio: 13, imagen: "images/productos/retro-1.png", cantidad: 5 },
@@ -115,6 +134,7 @@ const colecciones = [
   },
   {
     nombre: "Gafas Retro Metálicas",
+    slug: "retro-metalicas",
     descripcion: "Gafas de Sol Unisex, armazón estilo Stark, metálicas. Protección UV400.",
     productos: [
       { nombre: "Retro Metálicas 1", precio: 15, imagen: "images/productos/retro-metalicas-1.png", cantidad: 5 },
@@ -124,6 +144,7 @@ const colecciones = [
   },
   {
     nombre: "Gafas Vintage",
+    slug: "vintage",
     descripcion: "Gafas de Sol Vintage Unisex Armazón Rectangular Pequeño. Protección UV400.",
     productos: [
       { nombre: "Vintage 1", precio: 10, imagen: "images/productos/vintage-1.png", cantidad: 5 }
@@ -131,6 +152,7 @@ const colecciones = [
   },
   {
     nombre: "Gafas Cuadradas",
+    slug: "cuadradas",
     descripcion: "Gafas de Sol Unisex Armazón cuadrado grande. Protección UV400.",
     productos: [
       { nombre: "Cuadradas 1", precio: 12, imagen: "images/productos/cuadradas-1.png", cantidad: 5 }
