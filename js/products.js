@@ -1,47 +1,140 @@
 // ============================================================
 // CATÁLOGO DE GAFAS ZUIP
 // ============================================================
-// Edita esta lista para agregar, quitar o actualizar gafas.
-// Cada gafa es un objeto con estos campos:
+// El catálogo está organizado por colecciones (secciones). Cada
+// colección tiene un nombre, una descripción compartida, y una
+// lista de productos.
 //
+// Cada producto tiene:
 //   nombre       (texto)              -> nombre del modelo
-//   precio       (número)             -> precio en tu moneda, sin símbolo
+//   precio       (número)             -> precio en dólares, sin símbolo
 //   imagen       (texto, ruta)        -> ruta al archivo dentro de /images
 //   cantidad     (número)             -> unidades en stock. 0 = agotado
-//   descripcion  (texto, opcional)    -> descripción corta
 //
-// Para agregar una gafa nueva, copia un bloque { ... } completo,
-// pégalo antes del cierre "];" y edita sus valores.
+// Para agregar una gafa nueva a una colección, copia un bloque
+// { ... } completo dentro de su lista "productos" y edita sus valores.
+// Para agregar una colección nueva, copia un bloque de colección
+// completo (desde "nombre:" hasta el "]," que cierra "productos").
 // ============================================================
 
-const productos = [
+const colecciones = [
   {
-    nombre: "Aviador Clásico",
-    precio: 45000,
-    imagen: "images/gafa-aviador.svg",
-    cantidad: 5,
-    descripcion: "Montura metálica estilo aviador, lentes degradé."
+    nombre: "Gafas Clásicas",
+    descripcion: "Gafas de Sol Unisex Armazón Clásico Grueso. Protección UV400.",
+    productos: [
+      { nombre: "Clásicas 1", precio: 12, imagen: "images/productos/clasicas-1.png", cantidad: 5 },
+      { nombre: "Clásicas 2", precio: 12, imagen: "images/productos/clasicas-2.png", cantidad: 5 },
+      { nombre: "Clásicas 3", precio: 12, imagen: "images/productos/clasicas-3.png", cantidad: 5 },
+      { nombre: "Clásicas 4", precio: 12, imagen: "images/productos/clasicas-4.png", cantidad: 5 },
+      { nombre: "Clásicas 5", precio: 12, imagen: "images/productos/clasicas-5.png", cantidad: 5 },
+      { nombre: "Clásicas 6", precio: 12, imagen: "images/productos/clasicas-6.png", cantidad: 5 }
+    ]
   },
   {
-    nombre: "Redondo Retro",
-    precio: 38000,
-    imagen: "images/gafa-redonda.svg",
-    cantidad: 2,
-    descripcion: "Diseño circular vintage, ideal para uso diario."
+    nombre: "Gafas Aura",
+    descripcion: "Gafas de Sol Unisex Armazón Retro Delgado. Protección UV400.",
+    productos: [
+      { nombre: "Aura 1", precio: 13, imagen: "images/productos/aura-1.png", cantidad: 5 },
+      { nombre: "Aura 2", precio: 13, imagen: "images/productos/aura-2.png", cantidad: 5 },
+      { nombre: "Aura 3", precio: 13, imagen: "images/productos/aura-3.png", cantidad: 5 }
+    ]
   },
   {
-    nombre: "Cuadrado Urbano",
-    precio: 42000,
-    imagen: "images/gafa-cuadrada.svg",
-    cantidad: 0,
-    descripcion: "Montura de acetato, líneas rectas y modernas."
+    nombre: "Gafas Origen",
+    descripcion: "Gafas de Sol Unisex Armazón Retro Delgado. Protección UV400.",
+    productos: [
+      { nombre: "Origen 1", precio: 15, imagen: "images/productos/origen-1.png", cantidad: 5 },
+      { nombre: "Origen 2", precio: 15, imagen: "images/productos/origen-2.png", cantidad: 5 }
+    ]
   },
   {
-    nombre: "Ojo de Gato",
-    precio: 50000,
-    imagen: "images/gafa-gato.svg",
-    cantidad: 3,
-    descripcion: "Estilo femenino y elegante, terminación en punta."
+    nombre: "Gafas Esencia",
+    descripcion: "Gafas de Sol Unisex Armazón Retro Delgado. Protección UV400.",
+    productos: [
+      { nombre: "Esencia 1", precio: 15, imagen: "images/productos/esencia-1.png", cantidad: 5 }
+    ]
+  },
+  {
+    nombre: "Gafas Urbanas",
+    descripcion: "Gafas de Sol Unisex Armazón Retro Delgado. Protección UV400.",
+    productos: [
+      { nombre: "Urbanas 1", precio: 12, imagen: "images/productos/urbanas-1.png", cantidad: 5 },
+      { nombre: "Urbanas 2", precio: 12, imagen: "images/productos/urbanas-2.png", cantidad: 5 },
+      { nombre: "Urbanas 3", precio: 12, imagen: "images/productos/urbanas-3.png", cantidad: 5 }
+    ]
+  },
+  {
+    nombre: "Gafas Nexo",
+    descripcion: "Gafas de Sol Unisex Armazón Retro Delgado. Protección UV400.",
+    productos: [
+      { nombre: "Nexo 1", precio: 14, imagen: "images/productos/nexo-1.png", cantidad: 5 },
+      { nombre: "Nexo 2", precio: 14, imagen: "images/productos/nexo-2.png", cantidad: 5 }
+    ]
+  },
+  {
+    nombre: "Gafas Zenit",
+    descripcion: "Gafas de Sol Unisex Armazón Retro Delgado. Protección UV400.",
+    productos: [
+      { nombre: "Zenit 1", precio: 13, imagen: "images/productos/zenit-1.png", cantidad: 5 },
+      { nombre: "Zenit 2", precio: 13, imagen: "images/productos/zenit-2.png", cantidad: 5 },
+      { nombre: "Zenit 3", precio: 13, imagen: "images/productos/zenit-3.png", cantidad: 5 },
+      { nombre: "Zenit 4", precio: 13, imagen: "images/productos/zenit-4.png", cantidad: 5 }
+    ]
+  },
+  {
+    nombre: "Gafas Redondas",
+    descripcion: "Gafas de Sol Unisex Armazón Retro Delgado. Protección UV400.",
+    productos: [
+      { nombre: "Redondas 1", precio: 13, imagen: "images/productos/redondas-1.png", cantidad: 5 },
+      { nombre: "Redondas 2", precio: 13, imagen: "images/productos/redondas-2.png", cantidad: 5 },
+      { nombre: "Redondas 3", precio: 13, imagen: "images/productos/redondas-3.png", cantidad: 5 },
+      { nombre: "Redondas 4", precio: 13, imagen: "images/productos/redondas-4.png", cantidad: 5 },
+      { nombre: "Redondas 5", precio: 13, imagen: "images/productos/redondas-5.png", cantidad: 5 },
+      { nombre: "Redondas 6", precio: 13, imagen: "images/productos/redondas-6.png", cantidad: 5 }
+    ]
+  },
+  {
+    nombre: "Gafas Hexagonales",
+    descripcion: "Gafas de Sol Unisex Armazón hexagonal. Protección UV400.",
+    productos: [
+      { nombre: "Hexagonales 1", precio: 10, imagen: "images/productos/hexagonales-1.png", cantidad: 5 },
+      { nombre: "Hexagonales 2", precio: 10, imagen: "images/productos/hexagonales-2.png", cantidad: 5 },
+      { nombre: "Hexagonales 3", precio: 10, imagen: "images/productos/hexagonales-3.png", cantidad: 5 },
+      { nombre: "Hexagonales 4", precio: 10, imagen: "images/productos/hexagonales-4.png", cantidad: 5 }
+    ]
+  },
+  {
+    nombre: "Gafas Retro",
+    descripcion: "Gafas de Sol Unisex, armazón estilo Stark, regulares. Protección UV400.",
+    productos: [
+      { nombre: "Retro 1", precio: 13, imagen: "images/productos/retro-1.png", cantidad: 5 },
+      { nombre: "Retro 2", precio: 13, imagen: "images/productos/retro-2.png", cantidad: 5 },
+      { nombre: "Retro 3", precio: 13, imagen: "images/productos/retro-3.png", cantidad: 5 },
+      { nombre: "Retro 4", precio: 13, imagen: "images/productos/retro-4.png", cantidad: 5 }
+    ]
+  },
+  {
+    nombre: "Gafas Retro Metálicas",
+    descripcion: "Gafas de Sol Unisex, armazón estilo Stark, metálicas. Protección UV400.",
+    productos: [
+      { nombre: "Retro Metálicas 1", precio: 15, imagen: "images/productos/retro-metalicas-1.png", cantidad: 5 },
+      { nombre: "Retro Metálicas 2", precio: 15, imagen: "images/productos/retro-metalicas-2.png", cantidad: 5 },
+      { nombre: "Retro Metálicas 3", precio: 15, imagen: "images/productos/retro-metalicas-3.png", cantidad: 5 }
+    ]
+  },
+  {
+    nombre: "Gafas Vintage",
+    descripcion: "Gafas de Sol Vintage Unisex Armazón Rectangular Pequeño. Protección UV400.",
+    productos: [
+      { nombre: "Vintage 1", precio: 10, imagen: "images/productos/vintage-1.png", cantidad: 5 }
+    ]
+  },
+  {
+    nombre: "Gafas Cuadradas",
+    descripcion: "Gafas de Sol Unisex Armazón cuadrado grande. Protección UV400.",
+    productos: [
+      { nombre: "Cuadradas 1", precio: 12, imagen: "images/productos/cuadradas-1.png", cantidad: 5 }
+    ]
   }
 ];
 
@@ -60,4 +153,16 @@ const datosPago = {
   titular: "Nombre del Titular",
   identificacion: "Cédula / RUC (opcional)",
   qrImagen: "images/qr-placeholder.svg"
+};
+
+// ============================================================
+// DATOS DE CONTACTO
+// ============================================================
+// Se muestran en el pie de página del sitio.
+// ============================================================
+
+const contacto = {
+  telefonos: ["099 067 8222", "098 093 7264"],
+  instagram: "zuip_brand",
+  nota: "Acércate a nuestro show room en Quito (sector San Fernando) o pide tu envío a domicilio por un valor adicional."
 };

@@ -6,20 +6,24 @@ Sitio estático (HTML + CSS + JS puro) para mostrar el catálogo de ZUIP.
 
 Todo el catálogo se maneja desde un solo archivo: [`js/products.js`](js/products.js).
 
-Para agregar, quitar o modificar una gafa, edita la lista `productos`. Cada gafa tiene:
+El catálogo está organizado por **colecciones** (secciones), en la lista `colecciones`. Cada colección tiene:
 
-- `nombre`
-- `precio`
-- `imagen` (ruta dentro de `/images`)
-- `disponible` (`true` o `false`)
-- `descripcion` (opcional)
+- `nombre` (se muestra como título de la sección)
+- `descripcion` (subtítulo debajo del nombre)
+- `productos`: lista de gafas de esa colección, cada una con:
+  - `nombre`
+  - `precio`
+  - `imagen` (ruta dentro de `/images`)
+  - `cantidad` (unidades en stock; `0` = agotado)
 
-Para cambiar los datos de transferencia (banco, cuenta, titular, QR), edita el objeto `datosPago` en el mismo archivo.
+Para agregar una colección nueva, copia un bloque `{ nombre, descripcion, productos }` completo y pégalo en la lista `colecciones`. Para agregar una gafa a una colección existente, copia un bloque `{ ... }` dentro de su `productos`.
+
+Para cambiar los datos de transferencia (banco, cuenta, titular, QR), edita el objeto `datosPago` en el mismo archivo. Para cambiar teléfonos/Instagram del pie de página, edita el objeto `contacto`.
 
 ## Cómo agregar tus propias fotos
 
-1. Sube tus fotos a la carpeta `images/` (formato `.jpg` o `.png`).
-2. En `js/products.js`, cambia el campo `imagen` de cada gafa para que apunte a tu archivo, por ejemplo `images/aviador-negro.jpg`.
+1. Sube tus fotos a la carpeta `images/productos/` (formato `.jpg` o `.png`).
+2. En `js/products.js`, cambia el campo `imagen` de cada gafa para que apunte a tu archivo, por ejemplo `images/productos/aviador-negro.jpg`.
 
 ## Cómo agregar el logo
 

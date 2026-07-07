@@ -1,15 +1,16 @@
 // ============================================================
 // ZUIP — lógica del catálogo
-// Lee los datos de products.js (variables `productos` y `datosPago`)
-// y arma las tarjetas + el modal de pago. No necesita edición
-// para agregar/quitar gafas: eso se hace en products.js.
+// Lee los datos de products.js (variables `colecciones`, `datosPago`
+// y `contacto`) y arma las secciones + el modal de pago y el
+// lightbox. No necesita edición para agregar/quitar gafas: eso se
+// hace en products.js.
 // ============================================================
 
 function formatearPrecio(numero) {
   return numero.toLocaleString('es-ES');
 }
 
-function crearTarjeta(producto, indice) {
+function crearTarjeta(producto, colIndice, prodIndice) {
   const card = document.createElement('article');
   card.className = 'card';
 
@@ -18,16 +19,15 @@ function crearTarjeta(producto, indice) {
   const badgeTexto = hayStock ? `Hay ${producto.cantidad} disponibles` : 'Agotado';
 
   const botonHtml = hayStock
-    ? `<button class="btn-comprar" data-indice="${indice}">Cómo pagar</button>`
+    ? `<button class="btn-comprar" data-col="${colIndice}" data-prod="${prodIndice}">Cómo pagar</button>`
     : `<button class="btn-agotado" disabled>Agotado</button>`;
 
   card.innerHTML = `
     <div class="card-img-wrapper">
-      <img src="${producto.imagen}" alt="${producto.nombre}" loading="lazy" data-indice="${indice}">
+      <img src="${producto.imagen}" alt="${producto.nombre}" loading="lazy" data-col="${colIndice}" data-prod="${prodIndice}">
     </div>
     <div class="card-body">
       <h2 class="card-nombre">${producto.nombre}</h2>
-      ${producto.descripcion ? `<p class="card-descripcion">${producto.descripcion}</p>` : ''}
       <span class="badge ${badgeClase}">${badgeTexto}</span>
       <p class="card-precio">$${formatearPrecio(producto.precio)}</p>
       ${botonHtml}
@@ -37,24 +37,44 @@ function crearTarjeta(producto, indice) {
   return card;
 }
 
+function crearSeccion(coleccion, colIndice) {
+  const seccion = document.createElement('section');
+  seccion.className = 'coleccion-section';
+
+  const grid = document.createElement('div');
+  grid.className = 'catalogo-grid';
+
+  coleccion.productos.forEach((producto, prodIndice) => {
+    grid.appendChild(crearTarjeta(producto, colIndice, prodIndice));
+  });
+
+  seccion.innerHTML = `
+    <h2 class="coleccion-titulo">${coleccion.nombre}</h2>
+    <p class="coleccion-descripcion">${coleccion.descripcion}</p>
+  `;
+  seccion.appendChild(grid);
+
+  return seccion;
+}
+
 function renderizarCatalogo() {
   const contenedor = document.getElementById('catalogo');
   contenedor.innerHTML = '';
 
-  productos.forEach((producto, indice) => {
-    contenedor.appendChild(crearTarjeta(producto, indice));
+  colecciones.forEach((coleccion, colIndice) => {
+    contenedor.appendChild(crearSeccion(coleccion, colIndice));
   });
 
   contenedor.querySelectorAll('.btn-comprar').forEach((boton) => {
     boton.addEventListener('click', () => {
-      const producto = productos[Number(boton.dataset.indice)];
+      const producto = colecciones[Number(boton.dataset.col)].productos[Number(boton.dataset.prod)];
       abrirModalPago(producto);
     });
   });
 
   contenedor.querySelectorAll('.card-img-wrapper img').forEach((img) => {
     img.addEventListener('click', () => {
-      const producto = productos[Number(img.dataset.indice)];
+      const producto = colecciones[Number(img.dataset.col)].productos[Number(img.dataset.prod)];
       abrirLightbox(producto);
     });
   });
@@ -87,6 +107,13 @@ function cerrarModalPago() {
   document.getElementById('modal-pago').hidden = true;
 }
 
+function renderizarContacto() {
+  document.getElementById('contacto-telefonos').innerHTML =
+    contacto.telefonos.map((t) => `<span>${t}</span>`).join('');
+  document.getElementById('contacto-instagram').textContent = `Instagram: ${contacto.instagram}`;
+  document.getElementById('contacto-nota').textContent = contacto.nota;
+}
+
 document.getElementById('cerrar-modal').addEventListener('click', cerrarModalPago);
 
 document.getElementById('modal-pago').addEventListener('click', (evento) => {
@@ -113,3 +140,4 @@ document.addEventListener('keydown', (evento) => {
 document.getElementById('anio').textContent = new Date().getFullYear();
 
 renderizarCatalogo();
+renderizarContacto();
