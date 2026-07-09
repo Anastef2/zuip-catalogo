@@ -132,6 +132,8 @@ function abrirModalPago(producto) {
   document.getElementById('pago-numero').textContent = datosPago.numeroCuenta;
   document.getElementById('pago-titular').textContent = datosPago.titular;
   document.getElementById('pago-id').textContent = datosPago.identificacion;
+  document.getElementById('pago-id-fila').hidden = !datosPago.identificacion;
+  document.getElementById('pago-correo').textContent = datosPago.correo;
   document.getElementById('pago-qr').src = datosPago.qrImagen;
 
   document.getElementById('modal-pago').hidden = false;

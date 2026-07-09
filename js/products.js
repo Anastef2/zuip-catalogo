@@ -260,11 +260,12 @@ const colecciones = [
 // ============================================================
 
 const datosPago = {
-  banco: "Nombre del Banco",
-  tipoCuenta: "Cuenta de Ahorros / Corriente",
-  numeroCuenta: "0000-0000-0000",
-  titular: "Nombre del Titular",
-  identificacion: "Cédula / RUC (opcional)",
+  banco: "Banco Pichincha",
+  tipoCuenta: "Cuenta de Ahorros",
+  numeroCuenta: "2201925708",
+  titular: "Francisco Xavier Yépez López",
+  identificacion: "",
+  correo: "fyepez946@gmail.com",
   qrImagen: "images/qr-placeholder.svg"
 };
 
